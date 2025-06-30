@@ -12,7 +12,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,27 +25,43 @@ public class Livro {
 	private Long id;
 	@Column(unique = true)
 	private String titulo;
-	@OneToMany(mappedBy = "livro", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(
+			name = "livro_autor",
+			joinColumns = @JoinColumn(name = "livro_id"),
+			inverseJoinColumns = @JoinColumn(name = "autor_id")
+			)
+	
 	private List<AutorInfo> autores;
 	@Enumerated(EnumType.STRING)
 	private Languages languages;
 	private Double downloads;
 	
 	public Livro() {
-		super();
+	}
+	
+	
+
+	public Livro(List<LivroInfo> results) {
 	}
 
-	public Livro(String titulo, List<AutorInfo> autores, List<String> languages, Double downloads) {
+
+
+	public Livro(String titulo, List<Autores> autoresDTO, List<String> languages, Double downloads) {
 		this.titulo = titulo;
 		this.autores = new ArrayList<>();
 		this.languages = Languages.fromString(languages.get(0));
 		this.downloads = downloads;
 		
-		for(Autores autorInfo : autores) {
-			AutorInfo autor = new AutorInfo(autorInfo.name(),autorInfo.anoNasc, autorInfo.anoFale, this);
-			this.autores.add(autor);
+		for(Autores autorDTO : autoresDTO) {
+			AutorInfo autor = new AutorInfo(
+					autorDTO.name(), 
+					autorDTO.anoNasc(),
+					autorDTO.anoFale(),
+					this
+		);
+		this.autores.add(autor);
 		}
-		
 	}
 
 	public Long getId() {

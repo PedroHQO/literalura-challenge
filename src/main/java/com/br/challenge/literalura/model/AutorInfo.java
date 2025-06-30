@@ -1,10 +1,14 @@
 package com.br.challenge.literalura.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "autores")
@@ -16,15 +20,30 @@ public class AutorInfo {
 	private Integer anoNasc;
 	private Integer anoFale;
 	
-	@ManyToMany
-	private Livro livro;
+	@ManyToMany(mappedBy = "autores")
+	private List<Livro> livros;
+	
+	public AutorInfo() {
+		this.livros = new ArrayList<>();
+	};
 
 	public AutorInfo(Long id, String name, Integer anoNasc, Integer anoFale, Livro livro) {
 		this.id = id;
 		this.name = name;
 		this.anoNasc = anoNasc;
 		this.anoFale = anoFale;
-		this.livro = livro;
+		this.livros = new ArrayList<>();
+	}
+
+	public AutorInfo(String name, Integer anoNasc, Integer anoFale, Livro livro) {
+		super();
+		this.name = name;
+		this.anoNasc = anoNasc;
+		this.anoFale = anoFale;
+		this.livros = new ArrayList<>();
+		if(livro != null) {
+			this.livros.add(livro);
+		}
 	}
 
 	public Long getId() {
@@ -59,12 +78,12 @@ public class AutorInfo {
 		this.anoFale = anoFale;
 	}
 
-	public Livro getLivro() {
-		return livro;
+	public List<Livro> getLivros() {
+		return livros;
 	}
 
-	public void setLivro(Livro livro) {
-		this.livro = livro;
+	public void setLivros(List<Livro> livros) {
+		this.livros = livros;
 	}
 
 	@Override

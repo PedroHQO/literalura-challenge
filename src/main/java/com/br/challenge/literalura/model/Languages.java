@@ -14,8 +14,8 @@ public enum Languages {
 	}
 	
 	public static Languages fromString(String text) {
-		for(Languages caregoria : Languages.values()) 
-			if(categoria.idiomas.equalIgnoreCase(text)) {
+		for(Languages categoria : Languages.values()) 
+			if(categoria.idiomas.equalsIgnoreCase(text)) {
 				return categoria;
 			}
 		throw new IllegalArgumentException("Nenhuma categoria encontrada: " + text);
