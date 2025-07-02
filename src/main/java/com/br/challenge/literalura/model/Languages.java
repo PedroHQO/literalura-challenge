@@ -20,5 +20,15 @@ public enum Languages {
 			}
 		throw new IllegalArgumentException("Nenhuma categoria encontrada: " + text);
 	}
+
+	public String getIdiomas() {
+		return idiomas;
+	}
+
+	public void setIdiomas(String idiomas) {
+		this.idiomas = idiomas;
+	}
+	
+	
 	
 }

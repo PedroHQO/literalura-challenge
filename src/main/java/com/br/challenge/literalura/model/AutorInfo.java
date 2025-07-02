@@ -88,7 +88,7 @@ public class AutorInfo {
 
 	@Override
 	public String toString() {
-		return "Autor: \nId:" + id + "\nNome:" + name + "\nAno Nascimento:" + anoNasc + "\nAno Falecimento:" + anoFale + "]";
+		return "\nNome:" + name + "\nAno Nascimento:" + anoNasc + "\nAno Falecimento:" + anoFale;
 	}
 	
 	
